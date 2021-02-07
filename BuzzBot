@@ -1,0 +1,48 @@
+from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer
+from chatterbot.trainers import ChatterBotCorpusTrainer
+
+eduBot = ChatBot(name = "Buzz", readOnly = True, logicAdapters = ["chatterbot.logic.Mathematical",'chatterbot.logiv.BestMatch'])
+
+inniTalk = [
+    "Hello!",
+    'Hi!',
+    'Welcome!',
+    "How are you?",
+    "I am fine, you?"
+    "Glad to hear that.",
+    "Sorry to hear that.",
+    "What is your name?",
+    "I feel awesome!",
+    "I'm Tim, ask me a math question",
+    "How can I help?",
+    "I am ok"
+]
+
+mathTalk = ['pythagorean theorem','a squared plus b equals c squared']
+mathTalk2 = ['law of cosines', 'c**2= a**2+b**2-2*a*b*cos(gamma)']
+
+listTrainer = ListTrainer(eduBot)
+
+for item in (inniTalk, mathTalk,mathTalk2):
+    listTrainer.train(item)
+
+corpusTrainer = ChatterBotCorpusTrainer(eduBot)
+corpusTrainer.train('chatterbot')
+
+corpusTrainer = ChatterBotCorpusTrainer(eduBot)
+corpusTrainer.train('chatterbot.corpus.english')
+
+print(eduBot.get_response("Hello!"))
+print(eduBot.getResponse("What is your name?"))
+print(eduBot.get_response("What is the pythagorean theorem?"))
+
+
+indicator = True
+while indicator:
+  try:
+    botInput = input("You:")
+    botResponse = bot.get_response(botInput)
+    print(f"{eduBot.name}:{botResponse}")
+  except (KeyBoardInterrupt, SystemExit, EOFError):
+    break;
